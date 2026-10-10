@@ -1,6 +1,6 @@
-while true do{
+while ($true) {
     git add .
-    git commit -m "Auto commit: $(date)"
+    git commit -m "Auto commit: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
     git push
-    sleep 180
+    Start-Sleep -Seconds 180
 }
