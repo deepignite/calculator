@@ -2,23 +2,13 @@
     "showGrid": true,
     "canvases": [
         {
-            "x": -397.0,
-            "y": -515.0,
+            "x": -737.0,
+            "y": -561.0,
             "w": 393.0,
             "h": 808.0,
             "widget": "const HomePage()",
             "deps": [
                 "lib/pages/home_page.dart"
-            ]
-        },
-        {
-            "x": -852.0,
-            "y": -515.0,
-            "w": 393.0,
-            "h": 808.0,
-            "widget": "const CurrencyConverterPage()",
-            "deps": [
-                "lib/pages/currency_converter_page.dart"
             ]
         }
     ]
