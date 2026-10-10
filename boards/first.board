@@ -2,23 +2,13 @@
     "showGrid": true,
     "canvases": [
         {
-            "x": -29.0,
-            "y": -94.0,
+            "x": 113.0,
+            "y": -515.0,
             "w": 393.0,
-            "h": 808.0,
-            "widget": "const UnitConverterView()",
+            "h": 852.0,
+            "widget": "const HomePage()",
             "deps": [
-                "lib/pages/unit_converter_view.dart"
-            ]
-        },
-        {
-            "x": 443.0,
-            "y": -94.0,
-            "w": 393.0,
-            "h": 808.0,
-            "widget": "const EnergyConverterPage()",
-            "deps": [
-                "lib/pages/energy_converter_page.dart"
+                "lib/pages/home_page.dart"
             ]
         }
     ]

@@ -529,7 +529,7 @@ class ConvertersPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Theme.of(context).colorScheme.error,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: const Text('Converters', style: TextStyle(fontSize: 25.0)),
         centerTitle: false,
