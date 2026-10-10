@@ -1,0 +1,12 @@
+{
+    "version": "3.12.5",
+    "app": {
+        "name": "Calculator",
+        "bundleId": "com.deepignite.calculator"
+    },
+    "main": {},
+    "experimental": {
+        "load_packages": true
+    },
+    "permissions": []
+}
