@@ -3,13 +3,15 @@ import 'package:math_expressions/math_expressions.dart';
 import 'package:nowa_runtime/nowa_runtime.dart';
 import 'package:calculator/pages/converters_page.dart';
 
-@NowaGenerated({'auto-width': 393.0, 'auto-height': 852.0})
+@NowaGenerated({'auto-width': 393.0, 'auto-height': 808.0})
 class HomePage extends StatefulWidget {
   @NowaGenerated({'loader': 'auto-constructor'})
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() {
+    return _HomePageState();
+  }
 }
 
 class _HomePageState extends State<HomePage> {

@@ -48,9 +48,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
 
   late String _toUnit;
 
-  String? _asyncOutputKey;
-
-  Future<String>? _asyncOutput;
+  Future<String>? _conversionFuture;
 
   String get _outputResult {
     if (widget.customConvert != null) {
@@ -83,17 +81,14 @@ class _UnitConverterViewState extends State<UnitConverterView> {
     return _inputText;
   }
 
-  Future<String>? get _asyncOutputResult {
-    final convert = widget.asyncCustomConvert;
-    if (convert == null) {
-      return null;
+  void _updateConversion() {
+    if (widget.asyncCustomConvert != null) {
+      _conversionFuture = widget.asyncCustomConvert!(
+        _inputText,
+        _fromUnit,
+        _toUnit,
+      );
     }
-    final key = '${_inputText}|${_fromUnit}|${_toUnit}';
-    if (key != _asyncOutputKey) {
-      _asyncOutputKey = key;
-      _asyncOutput = convert(_inputText, _fromUnit, _toUnit);
-    }
-    return _asyncOutput;
   }
 
   @override
@@ -101,6 +96,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
     super.initState();
     _fromUnit = widget.defaultFromUnit;
     _toUnit = widget.defaultToUnit;
+    _updateConversion();
   }
 
   void _onKeyPressed(String key) {
@@ -140,6 +136,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
           _inputText += key;
         }
       } else if (key == '=') {}
+      _updateConversion();
     });
   }
 
@@ -268,7 +265,10 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                                 .toList(),
                             onChanged: (val) {
                               if (val != null) {
-                                setState(() => _fromUnit = val!);
+                                setState(() {
+                                  _fromUnit = val!;
+                                  _updateConversion();
+                                });
                               }
                             },
                           ),
@@ -295,6 +295,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                       final String temp = _fromUnit;
                       _fromUnit = _toUnit;
                       _toUnit = temp;
+                      _updateConversion();
                     });
                   },
                   icon: const Icon(Icons.swap_vert_rounded, size: 22.0),
@@ -355,7 +356,10 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                                 .toList(),
                             onChanged: (val) {
                               if (val != null) {
-                                setState(() => _toUnit = val!);
+                                setState(() {
+                                  _toUnit = val!;
+                                  _updateConversion();
+                                });
                               }
                             },
                           ),
@@ -364,7 +368,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                     ),
                     if (widget.asyncCustomConvert != null)
                       FutureBuilder<String>(
-                        future: _asyncOutputResult,
+                        future: _conversionFuture,
                         builder: (context, snapshot) {
                           final String display;
                           if (snapshot.connectionState ==

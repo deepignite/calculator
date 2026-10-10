@@ -2,17 +2,17 @@
     "showGrid": true,
     "canvases": [
         {
-            "x": 113.0,
+            "x": -397.0,
             "y": -515.0,
             "w": 393.0,
-            "h": 852.0,
+            "h": 808.0,
             "widget": "const HomePage()",
             "deps": [
                 "lib/pages/home_page.dart"
             ]
         },
         {
-            "x": -445.0,
+            "x": -852.0,
             "y": -515.0,
             "w": 393.0,
             "h": 808.0,
