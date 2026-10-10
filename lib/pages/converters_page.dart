@@ -251,70 +251,90 @@ class ConvertersPage extends StatelessWidget {
               left: 171.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.numbers_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.numbers_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 406.0,
               left: 43.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.electric_bolt_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.electric_bolt_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 282.0,
               left: 294.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.watch_later_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.watch_later_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 282.0,
               left: 170.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.speed_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.speed_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 282.0,
               left: 43.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.grid_4x4_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.grid_4x4_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 160.0,
               left: 294.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.local_fire_department_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.local_fire_department_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 160.0,
               left: 170.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.thermostat_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.thermostat_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 160.0,
               left: 43.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.scale_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.scale_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 36.0,
               left: 294.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.straighten_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.straighten_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 36.0,
               left: 170.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.view_in_ar_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.view_in_ar_rounded, size: 40.0),
+              ),
             ),
             const Positioned(
               top: 452.0,
@@ -464,7 +484,9 @@ class ConvertersPage extends StatelessWidget {
               left: 43.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.currency_exchange_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.currency_exchange_rounded, size: 40.0),
+              ),
             ),
             Positioned(
               top: 396.0,
@@ -500,7 +522,9 @@ class ConvertersPage extends StatelessWidget {
               left: 294.5,
               width: 50.0,
               height: 50.0,
-              child: Icon(Icons.compress_rounded, size: 40.0),
+              child: IgnorePointer(
+                child: Icon(Icons.compress_rounded, size: 40.0),
+              ),
             ),
           ],
         ),

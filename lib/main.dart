@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:calculator/pages/home_page.dart';
 
 @NowaGenerated()
-main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sharedPrefs = await SharedPreferences.getInstance();
 

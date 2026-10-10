@@ -1,30 +1,58 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:calculator/globals/unit_conversion.dart';
 import 'package:calculator/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('calculator evaluates expressions and opens converters', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(393, 852);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.tap(find.widgetWithText(ElevatedButton, '2'));
+    await tester.tap(find.widgetWithText(ElevatedButton, '+'));
+    await tester.tap(find.widgetWithText(ElevatedButton, '3'));
+    await tester.tap(find.widgetWithText(ElevatedButton, '='));
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('calculator-result'))).data,
+      '5',
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.tap(find.byTooltip('Converters'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(InkWell).at(8));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Length Converter'), findsOneWidget);
+    expect(find.text('3.28084'), findsOneWidget);
+  });
+
+  test('units_converter handles scale and offset conversions', () {
+    expect(
+      convertPackageUnit(
+        UnitConversionType.length,
+        1,
+        'Meter (m)',
+        'Foot (ft)',
+      ),
+      closeTo(3.28084, 0.00001),
+    );
+    expect(
+      convertPackageUnit(
+        UnitConversionType.temperature,
+        0,
+        'Celsius (°C)',
+        'Fahrenheit (°F)',
+      ),
+      closeTo(32, 0.00001),
+    );
   });
 }

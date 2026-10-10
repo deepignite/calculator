@@ -94,9 +94,8 @@ class _HomePageState extends State<HomePage> {
 
   void _evaluatePreview() {
     try {
-      final value = Parser()
-          .parse(_expression)
-          .evaluate(EvaluationType.REAL, ContextModel());
+      final expression = GrammarParser().parse(_expression);
+      final value = RealEvaluator().evaluate(expression).toDouble();
       if (value.isFinite) {
         _result = _format(value);
       }
@@ -186,6 +185,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 12),
                       Text(
                         _result,
+                        key: const ValueKey('calculator-result'),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.right,

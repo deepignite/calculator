@@ -14,6 +14,7 @@ class UnitConverterView extends StatefulWidget {
     this.conversionType,
     this.convert,
     this.customConvert,
+    this.asyncCustomConvert,
   });
 
   final String title;
@@ -30,6 +31,9 @@ class UnitConverterView extends StatefulWidget {
 
   final String Function(String value, String from, String to)? customConvert;
 
+  final Future<String> Function(String value, String from, String to)?
+  asyncCustomConvert;
+
   @override
   State<UnitConverterView> createState() {
     return _UnitConverterViewState();
@@ -43,6 +47,10 @@ class _UnitConverterViewState extends State<UnitConverterView> {
   late String _fromUnit;
 
   late String _toUnit;
+
+  String? _asyncOutputKey;
+
+  Future<String>? _asyncOutput;
 
   String get _outputResult {
     if (widget.customConvert != null) {
@@ -73,6 +81,19 @@ class _UnitConverterViewState extends State<UnitConverterView> {
       return str.isEmpty ? '0' : str;
     }
     return _inputText;
+  }
+
+  Future<String>? get _asyncOutputResult {
+    final convert = widget.asyncCustomConvert;
+    if (convert == null) {
+      return null;
+    }
+    final key = '$_inputText|$_fromUnit|$_toUnit';
+    if (key != _asyncOutputKey) {
+      _asyncOutputKey = key;
+      _asyncOutput = convert(_inputText, _fromUnit, _toUnit);
+    }
+    return _asyncOutput;
   }
 
   @override
@@ -131,44 +152,42 @@ class _UnitConverterViewState extends State<UnitConverterView> {
     Color? textColor,
     required void Function() onPressed,
   }) {
-    return Expanded(
-      child: SizedBox(
-        height: 62.0,
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-            backgroundColor: const WidgetStatePropertyAll<Color?>(
-              Color(0x431F00FF),
-            ),
-            foregroundColor: WidgetStatePropertyAll<Color?>(
-              Theme.of(context).colorScheme.primary,
-            ),
-            shadowColor: const WidgetStatePropertyAll<Color?>(null),
-            elevation: const WidgetStatePropertyAll<double?>(0.0),
-            side: const WidgetStatePropertyAll<BorderSide?>(null),
-            padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
-              EdgeInsets.zero,
-            ),
-            shape: const WidgetStatePropertyAll<RoundedRectangleBorder?>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(60.0)),
-              ),
+    return SizedBox(
+      height: 62.0,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          backgroundColor: const WidgetStatePropertyAll<Color?>(
+            Color(0x431F00FF),
+          ),
+          foregroundColor: WidgetStatePropertyAll<Color?>(
+            Theme.of(context).colorScheme.primary,
+          ),
+          shadowColor: const WidgetStatePropertyAll<Color?>(null),
+          elevation: const WidgetStatePropertyAll<double?>(0.0),
+          side: const WidgetStatePropertyAll<BorderSide?>(null),
+          padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
+            EdgeInsets.zero,
+          ),
+          shape: const WidgetStatePropertyAll<RoundedRectangleBorder?>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(60.0)),
             ),
           ),
-          child:
-              icon ??
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  fontSize: fontSize,
-                  color: textColor ?? Theme.of(context).colorScheme.shadow,
-                  height: fontSize > 30 ? -0.2 : null,
-                  fontWeight: fontWeight,
-                ),
-              ),
         ),
+        child:
+            icon ??
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              textDirection: TextDirection.ltr,
+              style: TextStyle(
+                fontSize: fontSize,
+                color: textColor ?? Theme.of(context).colorScheme.shadow,
+                height: fontSize > 30 ? -0.2 : null,
+                fontWeight: fontWeight,
+              ),
+            ),
       ),
     );
   }
@@ -249,7 +268,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                                 .toList(),
                             onChanged: (val) {
                               if (val != null) {
-                                setState(() => _fromUnit = val!);
+                                setState(() => _fromUnit = val);
                               }
                             },
                           ),
@@ -336,200 +355,64 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                                 .toList(),
                             onChanged: (val) {
                               if (val != null) {
-                                setState(() => _toUnit = val!);
+                                setState(() => _toUnit = val);
                               }
                             },
                           ),
                         ),
                       ],
                     ),
-                    Text(
-                      _outputResult,
-                      style: TextStyle(
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                    FutureBuilder<String>(
+                      future: _asyncOutputResult,
+                      builder: (context, snapshot) => Text(
+                        snapshot.data ?? _outputResult,
+                        style: TextStyle(
+                          fontSize: 32.0,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
-              Column(
-                spacing: 10.0,
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 4,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 1.15,
                 children: [
-                  Row(
-                    spacing: 10.0,
-                    children: [
-                      _buildCalcButton(
-                        context: context,
-                        label: 'AC',
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.w600,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('AC'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '±',
-                        fontSize: 33.0,
-                        fontWeight: FontWeight.w600,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('±'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '%',
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.w600,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('%'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '⌫',
-                        fontSize: 40.0,
-                        textColor: const Color(0xFF000000),
-                        onPressed: () => _onKeyPressed('backspace'),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    spacing: 10.0,
-                    children: [
-                      _buildCalcButton(
-                        context: context,
-                        label: '7',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('7'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '8',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('8'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '9',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('9'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '·',
-                        fontSize: 40.0,
-                        textColor: const Color(0xFF000000),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  Row(
-                    spacing: 10.0,
-                    children: [
-                      _buildCalcButton(
-                        context: context,
-                        label: '4',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('4'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '5',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('5'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '6',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('6'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: ' ',
-                        fontSize: 40.0,
-                        textColor: const Color(0xFF000000),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  Row(
-                    spacing: 10.0,
-                    children: [
-                      _buildCalcButton(
-                        context: context,
-                        label: '1',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('1'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '2',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('2'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '3',
-                        fontSize: 40.0,
-                        textColor: Theme.of(context).colorScheme.shadow,
-                        onPressed: () => _onKeyPressed('3'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: ' ',
-                        fontSize: 40.0,
-                        textColor: const Color(0xFF000000),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  Row(
-                    spacing: 10.0,
-                    children: [
-                      _buildCalcButton(
-                        context: context,
-                        label: '0',
-                        fontSize: 40.0,
-                        textColor: const Color(0xFF000000),
-                        onPressed: () => _onKeyPressed('0'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: '.',
-                        fontSize: 40.0,
-                        textColor: const Color(0xFF000000),
-                        onPressed: () => _onKeyPressed('.'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: 'backspace',
-                        icon: const Icon(
-                          Icons.backspace_outlined,
-                          color: Color(0xFF000000),
-                          size: 32.0,
-                        ),
-                        onPressed: () => _onKeyPressed('backspace'),
-                      ),
-                      _buildCalcButton(
-                        context: context,
-                        label: ' ',
-                        fontSize: 40.0,
-                        textColor: const Color(0xFF000000),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
+                  for (final key in const [
+                    'AC',
+                    '±',
+                    '%',
+                    'backspace',
+                    '7',
+                    '8',
+                    '9',
+                    '4',
+                    '5',
+                    '6',
+                    '1',
+                    '2',
+                    '3',
+                    '0',
+                    '.',
+                  ])
+                    _buildCalcButton(
+                      context: context,
+                      label: key == 'backspace' ? '' : key,
+                      icon: key == 'backspace'
+                          ? const Icon(Icons.backspace_outlined, size: 28.0)
+                          : null,
+                      fontSize: key.length > 1 ? 24.0 : 32.0,
+                      fontWeight: FontWeight.w600,
+                      onPressed: () => _onKeyPressed(key),
+                    ),
                 ],
               ),
             ],
