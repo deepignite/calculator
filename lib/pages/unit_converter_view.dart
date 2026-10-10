@@ -88,7 +88,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
     if (convert == null) {
       return null;
     }
-    final key = '$_inputText|$_fromUnit|$_toUnit';
+    final key = '${_inputText}|${_fromUnit}|${_toUnit}';
     if (key != _asyncOutputKey) {
       _asyncOutputKey = key;
       _asyncOutput = convert(_inputText, _fromUnit, _toUnit);
@@ -131,7 +131,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
         if (_inputText != '0') {
           _inputText = _inputText.startsWith('-')
               ? _inputText.substring(1)
-              : '-$_inputText';
+              : '-${_inputText}';
         }
       } else if (RegExp('^[0-9]\$').hasMatch(key)) {
         if (_inputText == '0') {
@@ -268,7 +268,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                                 .toList(),
                             onChanged: (val) {
                               if (val != null) {
-                                setState(() => _fromUnit = val);
+                                setState(() => _fromUnit = val!);
                               }
                             },
                           ),
@@ -355,17 +355,42 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                                 .toList(),
                             onChanged: (val) {
                               if (val != null) {
-                                setState(() => _toUnit = val);
+                                setState(() => _toUnit = val!);
                               }
                             },
                           ),
                         ),
                       ],
                     ),
-                    FutureBuilder<String>(
-                      future: _asyncOutputResult,
-                      builder: (context, snapshot) => Text(
-                        snapshot.data ?? _outputResult,
+                    if (widget.asyncCustomConvert != null)
+                      FutureBuilder<String>(
+                        future: _asyncOutputResult,
+                        builder: (context, snapshot) {
+                          final String display;
+                          if (snapshot.connectionState ==
+                                  ConnectionState.waiting &&
+                              snapshot.data == null) {
+                            display = '...';
+                          } else if (snapshot.hasError) {
+                            display = 'Unavailable';
+                          } else {
+                            display = snapshot.data ?? 'Unavailable';
+                          }
+                          return Text(
+                            display,
+                            style: TextStyle(
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          );
+                        },
+                      )
+                    else
+                      Text(
+                        _outputResult,
                         style: TextStyle(
                           fontSize: 32.0,
                           fontWeight: FontWeight.bold,
@@ -374,7 +399,6 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
                   ],
                 ),
               ),

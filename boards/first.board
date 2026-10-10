@@ -10,6 +10,16 @@
             "deps": [
                 "lib/pages/home_page.dart"
             ]
+        },
+        {
+            "x": -445.0,
+            "y": -515.0,
+            "w": 393.0,
+            "h": 808.0,
+            "widget": "const CurrencyConverterPage()",
+            "deps": [
+                "lib/pages/currency_converter_page.dart"
+            ]
         }
     ]
 }

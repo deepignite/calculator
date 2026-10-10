@@ -25,19 +25,42 @@ class CurrencyConverterPage extends StatelessWidget {
     return UnitConverterView(
       title: 'Currency Converter',
       units: _currencies.keys.toList(),
-      defaultFromUnit: 'USD (\$)',
-      defaultToUnit: 'EUR (€)',
+      defaultFromUnit: 'INR (₹)',
+      defaultToUnit: 'USD (\$)',
       asyncCustomConvert: (value, from, to) async {
-        final amount = double.tryParse(value);
+        final double? amount = double.tryParse(value);
         if (amount == null) {
           return '0';
         }
-        final converted = await CurrencyConverter.convert(
-          from: _currencies[from]!,
-          to: _currencies[to]!,
-          amount: amount,
-        );
-        return converted?.toString() ?? 'Unavailable';
+        try {
+          final fromCurrency = _currencies[from];
+          final toCurrency = _currencies[to];
+          if (fromCurrency == null || toCurrency == null) {
+            return '0';
+          }
+          final double? converted = await CurrencyConverter.convert(
+            from: fromCurrency,
+            to: toCurrency,
+            amount: amount,
+          );
+          if (converted == null) {
+            return 'Unavailable';
+          }
+          if (converted.abs() >= 1000000000.0 ||
+              (converted.abs() < 0.0001 && converted != 0)) {
+            return converted.toStringAsExponential(4);
+          }
+          String str = converted.toStringAsFixed(4);
+          if (str.contains('.')) {
+            str = str.replaceAll(RegExp('0+\$'), '');
+            if (str.endsWith('.')) {
+              str = str.substring(0, str.length - 1);
+            }
+          }
+          return str.isEmpty ? '0' : str;
+        } catch (_) {
+          return 'Unavailable';
+        }
       },
     );
   }
