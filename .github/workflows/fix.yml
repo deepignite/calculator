@@ -30,6 +30,9 @@ jobs:
       - name: Show Flutter version
         run: flutter --version
 
+      - name: Recreate platforms
+        run: flutter create --platforms=android .
+
       - name: Check for legacy Android v1 embedding patterns
         run: |
           echo "Searching for legacy Android embedding usage..."
