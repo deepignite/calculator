@@ -1,0 +1,65 @@
+name: Flutter v2 fix validation
+
+on:
+  push:
+    branches:
+      - v2-fix
+  workflow_dispatch:
+
+jobs:
+  flutter-v2-fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: v2-fix
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Show Flutter version
+        run: flutter --version
+
+      - name: Check for legacy Android v1 embedding patterns
+        run: |
+          echo "Searching for legacy Android embedding usage..."
+          grep -RInE "io\.flutter\.app|FlutterApplication|registerWith\(|io\.flutter\.plugin\.common\.PluginRegistry|android:name=\"flutterEmbedding\"" android . || true
+
+      - name: Clean and fetch dependencies
+        run: |
+          flutter clean
+          flutter pub get
+
+      - name: Upgrade Flutter dependencies
+        run: |
+          flutter pub upgrade
+
+      - name: Run Flutter analyze
+        run: |
+          flutter analyze || true
+
+      - name: Build Android APK to validate migration
+        run: |
+          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
+
+      - name: Prepare APK Output Name
+        run: |
+          cp build/app/outputs/flutter-apk/app-release.apk deepignite_calculator-v0.1.0.test.apk
+      - name: Upload temporary file
+        uses: actions/upload-artifact@v4
+        with:
+          name: deepignite_calculator-v0.1.0.test.apk
+          path: deepignite_calculator-v0.1.0.test.apk
+          retention-days: 1
