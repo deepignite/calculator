@@ -33,6 +33,27 @@ jobs:
       - name: Recreate platforms
         run: flutter create --platforms=android .
 
+      - name: Generate temporary Android keystore and key.properties
+        run: |
+          mkdir -p android
+          keytool -genkeypair \
+            -v \
+            -keystore android/upload-keystore.jks \
+            -storepass android \
+            -keypass android \
+            -alias upload \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Deepignite, OU=Flutter, O=Deepignite, L=Local, S=Local, C=US"
+
+          cat > key.properties <<'EOF'
+          storePassword=android
+          keyPassword=android
+          keyAlias=upload
+          storeFile=android/upload-keystore.jks
+          EOF
+
       - name: Check for legacy Android v1 embedding patterns
         run: |
           echo "Searching for legacy Android embedding usage..."
