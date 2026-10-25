@@ -69,7 +69,7 @@
     },
     {
       "name": "chewie",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/chewie-1.17.2",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/chewie-1.17.4",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -297,9 +297,9 @@
     },
     {
       "name": "image_picker",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker-1.2.3",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker-1.2.4",
       "packageUri": "lib/",
-      "languageVersion": "3.10"
+      "languageVersion": "3.11"
     },
     {
       "name": "image_picker_android",
@@ -315,7 +315,7 @@
     },
     {
       "name": "image_picker_ios",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_ios-0.8.13+9",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_ios-0.8.13+10",
       "packageUri": "lib/",
       "languageVersion": "3.11"
     },
@@ -333,9 +333,9 @@
     },
     {
       "name": "image_picker_platform_interface",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_platform_interface-2.11.1",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_platform_interface-2.11.2",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.11"
     },
     {
       "name": "image_picker_windows",
@@ -357,7 +357,7 @@
     },
     {
       "name": "jni_flutter",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/jni_flutter-1.0.3",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/jni_flutter-1.0.4+1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -525,9 +525,9 @@
     },
     {
       "name": "platform",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.6",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.2.0",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.10"
     },
     {
       "name": "plugin_platform_interface",
@@ -561,13 +561,13 @@
     },
     {
       "name": "shared_preferences",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.5.5",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences-2.5.6",
       "packageUri": "lib/",
-      "languageVersion": "3.9"
+      "languageVersion": "3.11"
     },
     {
       "name": "shared_preferences_android",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.4.28",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.5.3",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -633,7 +633,7 @@
     },
     {
       "name": "synchronized",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.4.2",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.5.0",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -735,9 +735,9 @@
     },
     {
       "name": "video_player_avfoundation",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_avfoundation-2.12.0",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_avfoundation-2.12.1",
       "packageUri": "lib/",
-      "languageVersion": "3.10"
+      "languageVersion": "3.11"
     },
     {
       "name": "video_player_platform_interface",
@@ -759,13 +759,13 @@
     },
     {
       "name": "vm_service",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/vm_service-15.3.0",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/vm_service-15.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
     {
       "name": "wakelock_plus",
-      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/wakelock_plus-1.8.1",
+      "rootUri": "file:///C:/Users/aksha/AppData/Local/Pub/Cache/hosted/pub.dev/wakelock_plus-1.8.2",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },

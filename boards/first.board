@@ -2,13 +2,13 @@
     "showGrid": true,
     "canvases": [
         {
-            "x": -737.0,
-            "y": -561.0,
-            "w": 393.0,
-            "h": 808.0,
-            "widget": "const HomePage()",
+            "x": 82.0,
+            "y": -526.0,
+            "w": 388.0,
+            "h": 852.0,
+            "widget": "const ConvertersPage()",
             "deps": [
-                "lib/pages/home_page.dart"
+                "lib/pages/converters_page.dart"
             ]
         }
     ]

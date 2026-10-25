@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:math_expressions/math_expressions.dart';
 import 'package:nowa_runtime/nowa_runtime.dart';
+import 'package:math_expressions/math_expressions.dart';
 import 'package:calculator/pages/converters_page.dart';
 
 @NowaGenerated({'auto-width': 393.0, 'auto-height': 808.0})
@@ -14,9 +14,12 @@ class HomePage extends StatefulWidget {
   }
 }
 
+@NowaGenerated()
 class _HomePageState extends State<HomePage> {
   String _expression = '0';
+
   String _result = '0';
+
   bool _justEvaluated = false;
 
   void _press(String key) {
@@ -43,7 +46,7 @@ class _HomePageState extends State<HomePage> {
       }
       if (key == '%') {
         _expression = _expression.replaceFirstMapped(
-          RegExp(r'(\d+\.?\d*)$'),
+          RegExp('(\\d+\\.?\\d*)\$'),
           (match) => '(${match[0]}/100)',
         );
         _justEvaluated = false;
@@ -59,12 +62,11 @@ class _HomePageState extends State<HomePage> {
         _justEvaluated = false;
         return;
       }
-
       final isOperator = const ['÷', '×', '−', '+'].contains(key);
       if (_justEvaluated && !isOperator) {
         _expression = key == '.' ? '0.' : key;
       } else if (key == '.') {
-        final lastOperand = _expression.split(RegExp(r'[+\-*/]')).last;
+        final lastOperand = _expression.split(RegExp('[+\\-*/]')).last;
         if (!lastOperand.contains('.')) {
           _expression += lastOperand.isEmpty ? '0.' : '.';
         }
@@ -78,11 +80,11 @@ class _HomePageState extends State<HomePage> {
         if (_expression == '0' && operator != '-') {
           return;
         }
-        if (RegExp(r'[+\-*/]$').hasMatch(_expression)) {
+        if (RegExp('[+\\-*/]\$').hasMatch(_expression)) {
           _expression = _expression.substring(0, _expression.length - 1);
         }
         _expression += operator;
-      } else if (RegExp(r'^\d$').hasMatch(key)) {
+      } else if (RegExp('^\\d\$').hasMatch(key)) {
         if (_expression == '0' || _justEvaluated) {
           _expression = key;
         } else {
@@ -116,7 +118,7 @@ class _HomePageState extends State<HomePage> {
     if (value.abs() >= 1000000000 || (value.abs() < 0.0001 && value != 0)) {
       return value.toStringAsExponential(4);
     }
-    return value.toStringAsFixed(6).replaceFirst(RegExp(r'\.?0+$'), '');
+    return value.toStringAsFixed(6).replaceFirst(RegExp('\\.?0+\$'), '');
   }
 
   void _openConverters() {
@@ -150,7 +152,6 @@ class _HomePageState extends State<HomePage> {
       '.',
       '=',
     ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calculator'),
@@ -164,7 +165,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
           child: Column(
             children: [
               Expanded(
@@ -184,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 12.0),
                       Text(
                         _result,
                         key: const ValueKey('calculator-result'),
@@ -198,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20.0),
               Expanded(
                 flex: 5,
                 child: GridView.builder(
@@ -206,8 +207,8 @@ class _HomePageState extends State<HomePage> {
                   itemCount: keys.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0,
                   ),
                   itemBuilder: (context, index) {
                     final key = keys[index];
@@ -229,14 +230,14 @@ class _HomePageState extends State<HomePage> {
                         foregroundColor: Theme.of(
                           context,
                         ).colorScheme.onSurface,
-                        elevation: 0,
+                        elevation: 0.0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                       ),
                       child: key == 'backspace'
                           ? const Icon(Icons.backspace_outlined)
-                          : Text(key, style: const TextStyle(fontSize: 24)),
+                          : Text(key, style: const TextStyle(fontSize: 24.0)),
                     );
                   },
                 ),

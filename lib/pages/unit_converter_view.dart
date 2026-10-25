@@ -127,7 +127,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
         if (_inputText != '0') {
           _inputText = _inputText.startsWith('-')
               ? _inputText.substring(1)
-              : '-${_inputText}';
+              : '-$_inputText';
         }
       } else if (RegExp('^[0-9]\$').hasMatch(key)) {
         if (_inputText == '0') {
@@ -266,7 +266,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                             onChanged: (val) {
                               if (val != null) {
                                 setState(() {
-                                  _fromUnit = val!;
+                                  _fromUnit = val;
                                   _updateConversion();
                                 });
                               }
@@ -357,7 +357,7 @@ class _UnitConverterViewState extends State<UnitConverterView> {
                             onChanged: (val) {
                               if (val != null) {
                                 setState(() {
-                                  _toUnit = val!;
+                                  _toUnit = val;
                                   _updateConversion();
                                 });
                               }
